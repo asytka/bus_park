@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Bus Station</title>
+</head>
+<body>
+<h1>Station Buses</h1>
+<form method="post" action="/add">
+    Number: <input type="text" name="number">
+    Driver: <input type="text" name="driver">
+    Route: <input type="text" name="route">
+    <button type="submit">Add</button>
+</form>
+<ul>
+    <li th:each="bus : ${stationBuses}">
+        <span th:text="${bus.number} + ' - ' + ${bus.driver} + ' - ' + ${bus.route}"></span>
+        <form method="post" action="/move" style="display:inline">
+            <input type="hidden" th:name="number" th:value="${bus.number}"/>
+            <button type="submit">To Route</button>
+        </form>
+    </li>
+</ul>
+
+<h1>Route Buses</h1>
+<ul>
+    <li th:each="bus : ${routeBuses}" th:text="${bus.number} + ' - ' + ${bus.driver} + ' - ' + ${bus.route}"></li>
+</ul>
+</body>
+</html>
+
