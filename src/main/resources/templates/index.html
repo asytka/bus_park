@@ -6,10 +6,12 @@
     <style>
         body {
             font-family: 'Segoe UI', sans-serif;
-            background: #f0f2f5;
+            background: linear-gradient(to bottom, #f0f2f5 0%, #a0e9ff 100%);
+            height: 100vh;
             margin: 0;
             padding: 20px;
         }
+
         h1 {
             text-align: center;
             color: #333;
@@ -70,6 +72,37 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        #busAnimation {
+            position: fixed;
+            bottom: 20px;
+            font-size: 96px;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        @keyframes drive-right {
+            0%   { left: -100px; opacity: 1; }
+            50%  { opacity: 1; }
+            100% { left: 100vw; opacity: 0; }
+        }
+
+        @keyframes drive-left {
+            0%   { right: -100px; opacity: 1; }
+            50%  { opacity: 1; }
+            100% { right: 100vw; opacity: 0; }
+        }
+
+        .right {
+            left: -100px;
+            right: auto;
+            animation: drive-right 2s linear forwards;
+        }
+
+        .left {
+            right: -100px;
+            left: auto;
+            animation: drive-left 2s linear forwards;
+        }
     </style>
 </head>
 <body>
@@ -125,7 +158,11 @@
             </tr>
             </tbody>
         </table>
+        <div id="busAnimation">
+            🚌
+        </div>
     </div>
+
 </div>
 
 <script>
@@ -148,16 +185,25 @@
         }).then(() => location.reload());
     });
 
+    function triggerBusAnimation(direction) {
+        const busIcon = document.getElementById("busAnimation");
+        busIcon.className = ''; // Reset class
+        void busIcon.offsetWidth; // Force reflow
+        busIcon.classList.add(direction);
+    }
+
     function sendToRoute(button) {
         const id = button.getAttribute("data-id");
+        triggerBusAnimation("right");
         fetch(`/index/buses/sendToRoute/${id}`, { method: 'PUT' })
-            .then(() => location.reload());
+            .then(() => setTimeout(() => location.reload(), 2000));
     }
 
     function sendToParking(button) {
         const id = button.getAttribute("data-id");
+        triggerBusAnimation("left");
         fetch(`/index/buses/sendToParking/${id}`, { method: 'PUT' })
-            .then(() => location.reload());
+            .then(() => setTimeout(() => location.reload(), 2000));
     }
 </script>
 </body>
