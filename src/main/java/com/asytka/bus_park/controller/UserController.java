@@ -19,6 +19,10 @@ public class UserController {
         return "login"; // name of the HTML file
     }
 
+    @GetMapping("/")
+    public String redirect() { return "redirect:login"; }
+
+
     @PostMapping("/login")
     public String authenticate(@RequestParam String username, @RequestParam String password, Model model) {
         User user = userService.findByUsername(username);
