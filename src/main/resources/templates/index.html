@@ -121,14 +121,16 @@
         <table>
             <thead>
             <tr>
+                <th>#</th>
                 <th>Bus #</th>
                 <th>Driver</th>
                 <th>Route</th>
-                <th> </th>
+                <th></th>
             </tr>
             </thead>
             <tbody id="parkingTable">
-            <tr th:each="bus : ${parkingBuses}">
+            <tr th:each="bus, iterStat : ${parkingBuses}">
+                <td th:text="${iterStat.index + 1}">1</td>
                 <td th:text="${bus.number}">101</td>
                 <td th:text="${bus.driver}">John</td>
                 <td th:text="${bus.route}">City Center</td>
@@ -143,14 +145,16 @@
         <table>
             <thead>
             <tr>
+                <th>#</th>
                 <th>Bus #</th>
                 <th>Driver</th>
                 <th>Route</th>
-                <th> </th>
+                <th></th>
             </tr>
             </thead>
             <tbody id="routeTable">
-            <tr th:each="bus : ${routeBuses}">
+            <tr th:each="bus, iterStat : ${routeBuses}">
+                <td th:text="${iterStat.index + 1}">1</td>
                 <td th:text="${bus.number}">202</td>
                 <td th:text="${bus.driver}">Anna</td>
                 <td th:text="${bus.route}">Airport</td>
